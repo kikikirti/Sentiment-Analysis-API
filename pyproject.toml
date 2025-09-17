@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+known_first_party = ["app", "model", "tests"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+# Keep the default select and relax a few noisy rules for a new scaffold.
+lint.select = ["E", "F", "I", "B", "UP"]
+lint.ignore = [
+  "E402",  # module level import not at top (often fine in small scripts)
+]
+# Don’t lint virtual envs etc.
+extend-exclude = [".venv", "venv", "model/pipeline.pkl"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+pythonpath = ["."]
