@@ -82,12 +82,19 @@ def predict(payload: PredictIn):
     dependencies=[Depends(require_api_key)],
 )
 def predict_batch(payload: BatchIn):
+    if len(payload.texts) > settings.MAX_BATCH:
+        raise HTTPException(
+            status_code=413,
+            detail=f"Too many texts in batch (>{settings.MAX_BATCH})",
+        )
     pipe, _ = get_pipeline_and_meta()
     out: list[BatchOutItem] = []
     for t in payload.texts:
         label, score, _ = _predict_text(pipe, t)
         out.append({"label": label, "score": round(score, 6)})
     return out
+
+
 
 # ---------- lifespan & app factory ----------
 @asynccontextmanager
