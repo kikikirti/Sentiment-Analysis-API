@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     MODEL_PATH: str = "model/pipeline.pkl"
     MAX_TEXT_LEN: int = 10_000
     MAX_BATCH: int = 200
+    MAX_BODY_BYTES: int = 10_240  # ~10KB request payload cap  ← add this
 
     model_config = SettingsConfigDict(
         env_file=".env",

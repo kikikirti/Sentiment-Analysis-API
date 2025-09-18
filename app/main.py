@@ -10,6 +10,7 @@ from sklearn.pipeline import Pipeline
 
 from app.config import settings
 from app.deps import get_pipeline_and_meta
+from app.limits_mv import body_limit_middleware
 from app.logging_mw import timing_middleware
 from app.schemas import BatchIn, BatchOutItem, PredictIn, PredictOut
 
@@ -106,6 +107,7 @@ async def lifespan(app_: FastAPI):
 def create_app() -> FastAPI:
     app = FastAPI(title="Sentiment Analysis API", lifespan=lifespan)
     app.middleware("http")(timing_middleware)
+    app.middleware("http")(body_limit_middleware)
     app.include_router(router)
     return app
 
