@@ -1,25 +1,18 @@
 # app/config.py
 from __future__ import annotations
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
-import os
-from dataclasses import dataclass
-from pathlib import Path
+class Settings(BaseSettings):
+    API_KEY: str = "your_key_here"
+    LOG_LEVEL: str = "INFO"
+    MODEL_PATH: str = "model/pipeline.pkl"
+    MAX_TEXT_LEN: int = 10_000
+    MAX_BATCH: int = 200
 
-from dotenv import load_dotenv
-
-load_dotenv()  # loads .env if present
-
-
-@dataclass
-class Settings:
-    API_KEY: str = os.getenv("API_KEY", "your_key_here")
-    LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")
-    MODEL_PATH: str = os.getenv("MODEL_PATH", "model/pipeline.pkl")
-    MAX_TEXT_LEN: int = int(os.getenv("MAX_TEXT_LEN", "10000"))
-    MAX_BATCH: int = int(os.getenv("MAX_BATCH", "200"))
-
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
 
 settings = Settings()
-
-# Ensure model dir exists (nice for local dev)
-Path(settings.MODEL_PATH).parent.mkdir(parents=True, exist_ok=True)
