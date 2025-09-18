@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import logging
 from contextlib import asynccontextmanager
-from typing import Any
 
 import numpy as np
 from fastapi import APIRouter, Depends, FastAPI, Header, HTTPException, status
