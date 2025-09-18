@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 import joblib
+
 from app.config import settings
 
 logger = logging.getLogger("api")
