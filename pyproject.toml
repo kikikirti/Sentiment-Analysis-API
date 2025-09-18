@@ -26,3 +26,7 @@ extend-exclude = [".venv", "venv", "model/pipeline.pkl"]
 addopts = "-q"
 testpaths = ["tests"]
 pythonpath = ["."]
+
+filterwarnings = [
+  "ignore:Please use `import python_multipart` instead.:PendingDeprecationWarning",
+]
